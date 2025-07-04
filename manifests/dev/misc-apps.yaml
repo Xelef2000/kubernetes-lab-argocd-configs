@@ -37,7 +37,8 @@ spec:
                 sourceRepos:
                 - https://argoproj.github.io/argo-helm
                 - https://charts.adfinis.com
-                - https://github.com/adfinis/argocd-configs.git
+                - https://github.com/adfinis/argocd-configs.git'
+                - http://my-gitea-instance-gitea-http.gitea-dev.svc.cluster.local:3000/dev-admin/kubernetes-lab-argocd-configs.git
                 destinations:
                 - namespace: infra-argocd
                   server: https://kubernetes.default.svc
@@ -59,7 +60,7 @@ spec:
                   server: https://kubernetes.default.svc
                 source:
                   path: manifests/dev/
-                  repoURL: https://github.com/adfinis/argocd-configs.git
+                  repoURL: http://my-gitea-instance-gitea-http.gitea-dev.svc.cluster.local:3000/dev-admin/kubernetes-lab-argocd-configs.git
                   targetRevision: HEAD
                 syncPolicy:
                   automated: {}
