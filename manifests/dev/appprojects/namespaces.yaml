@@ -17,4 +17,4 @@ spec:
     - group: ""
       kind: Namespace
   sourceRepos:
-    - http://my-gitea-instance-gitea-http.gitea-dev.svc.cluster.local:3000/dev-admin/kubernetes-lab-argocd-configs.git
+    - http://my-gitea-instance-http.gitea-dev.svc.cluster.local:3000/dev-admin/kubernetes-lab-argocd-configs.git
