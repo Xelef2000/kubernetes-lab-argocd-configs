@@ -36,7 +36,15 @@ spec:
             namespace: infra-argocd
           fullnameOverride: argocd
           values:
+            configs:
+              cm:
+                create: true
+                url: https://argocd.mydevlab.local
+                admin.enabled: "true"
+                users.anonymous.enabled: "false"
             createAggregateRoles: true
+            global:
+              domain: argocd.mydevlab.local
             controller:
               resources:
                 requests:
@@ -73,10 +81,19 @@ spec:
                   cpu: 500m
                   memory: 1Gi
               config:
+                url: https://argocd.mydevlab.local
                 admin.enabled: "true"
                 users.anonymous.enabled: "false"
               staticAssets:
                 enabled: true
+              ingress:
+                enabled: true
+                annotations:
+                  nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+                  nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+                  nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+                hosts:
+                  - argocd.mydevlab.local
             redis:
               resources:
                 requests:
