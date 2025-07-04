@@ -1,0 +1,20 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ingress
+  namespace: infra-argocd
+  labels:
+    app.kubernetes.io/name: ingress
+    app.kubernetes.io/component: infra-argocd
+    app.kubernetes.io/managed-by: helm-infra-argocd
+spec:
+  description: deploy ingress from Argo CD
+  destinations:
+    - namespace: '*'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Ingress
+  sourceRepos:
+    - https://github.com/Xelef2000/HC-Vault-Boost-argocd-configs.git
