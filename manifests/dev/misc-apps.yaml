@@ -4,57 +4,37 @@ kind: Application
 metadata:
   name: misc-apps
   namespace: infra-argocd
+  labels:
+    app.kubernetes.io/name: helm-infra-argocd
+    app.kubernetes.io/component: misc-apps
+    app.kubernetes.io/managed-by: helm-infra-argocd
 spec:
   destination:
     namespace: infra-argocd
     server: https://kubernetes.default.svc
-  project: infra-argocd
+  project: argocd-apps
   syncPolicy:
     automated: {}
-    syncOptions:
-      - CreateNamespace=true
   source:
-    chart: misc-apps
     repoURL: https://charts.adfinis.com
+    chart: misc-apps
     targetRevision: "*"
     helm:
-      values: |-
+      valuesObject:
         fullnameOverride: app
         argocdApps:
           enabled: true
           project: infra-argocd
-          syncPolicy:
-            automated: {}
-            syncOptions:
-              - CreateNamespace=true
           destination:
             server: https://kubernetes.default.svc
             namespace: infra-argocd
+          syncPolicy:
+            automated: {}
           values:
-            projects:
-              infra-argocd:
-                description: Deploy and manage the hosted Argo CD instance.
-                sourceRepos:
-                - https://argoproj.github.io/argo-helm
-                - https://charts.adfinis.com
-                - https://github.com/adfinis/argocd-configs.git'
-                - http://my-gitea-instance-http.gitea-dev.svc.cluster.local:3000/dev-admin/kubernetes-lab-argocd-configs.git
-                destinations:
-                - namespace: infra-argocd
-                  server: https://kubernetes.default.svc
-                clusterResourceWhitelist:
-                - group: ""
-                  kind: Namespace
-                - group: apiextensions.k8s.io
-                  kind: CustomResourceDefinition
-                - group: rbac.authorization.k8s.io
-                  kind: ClusterRoleBinding
-                - group: rbac.authorization.k8s.io
-                  kind: ClusterRole
             applications:
               argocd-configs:
                 namespace: infra-argocd
-                project: infra-argocd
+                project: argocd-apps
                 destination:
                   namespace: infra-argocd
                   server: https://kubernetes.default.svc
@@ -64,19 +44,14 @@ spec:
                   targetRevision: HEAD
                 syncPolicy:
                   automated: {}
-                  syncOptions:
-                    - CreateNamespace=true
-            appprojects:
+              appprojects:
                 namespace: infra-argocd
-                additionalLabels:
-                  app.kubernetes.io/component: infra
-                  app.kubernetes.io/name: helm-infrastructure-argoconfig
                 project: appprojects
                 destination:
                   namespace: infra-argocd
                   server: https://kubernetes.default.svc
                 source:
-                  path: manifests/dev/appprojects/
+                  path: manifests/dev/appprojects
                   repoURL: http://my-gitea-instance-http.gitea-dev.svc.cluster.local:3000/dev-admin/kubernetes-lab-argocd-configs.git
                   targetRevision: HEAD
                 syncPolicy:
