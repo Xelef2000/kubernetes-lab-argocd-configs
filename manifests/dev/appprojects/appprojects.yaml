@@ -1,0 +1,20 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: appprojects
+  namespace: infra-argocd
+  labels:
+    app.kubernetes.io/name: appprojects
+    app.kubernetes.io/component: infra-argocd
+    app.kubernetes.io/managed-by: helm-infra-argocd
+spec:
+  description: deploy AppProjects from Argo CD
+  destinations:
+    - namespace: infra-argocd
+      server: https://kubernetes.default.svc
+  namespaceResourceWhitelist:
+    - group: argoproj.io
+      kind: AppProject
+  sourceRepos:
+    - http://my-gitea-instance-http.gitea-dev.svc.cluster.local:3000/dev-admin/kubernetes-lab-argocd-configs.git

@@ -22,7 +22,7 @@ spec:
     repoURL: https://charts.adfinis.com
     targetRevision: "*"
     helm:
-      values: |-
+      values:
         fullnameOverride: app
         argocd:
           enabled: true
