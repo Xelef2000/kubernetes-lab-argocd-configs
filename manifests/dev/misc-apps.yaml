@@ -31,26 +31,6 @@ spec:
           syncPolicy:
             automated: {}
           values:
-            projects:
-              infra-argocd:
-                description: Deploy and manage the hosted Argo CD instance.
-                sourceRepos:
-                - https://argoproj.github.io/argo-helm
-                - https://charts.adfinis.com
-                - https://github.com/adfinis/argocd-configs.git'
-                - http://my-gitea-instance-http.gitea-dev.svc.cluster.local:3000/dev-admin/kubernetes-lab-argocd-configs.git
-                destinations:
-                - namespace: infra-argocd
-                  server: https://kubernetes.default.svc
-                clusterResourceWhitelist:
-                - group: ""
-                  kind: Namespace
-                - group: apiextensions.k8s.io
-                  kind: CustomResourceDefinition
-                - group: rbac.authorization.k8s.io
-                  kind: ClusterRoleBinding
-                - group: rbac.authorization.k8s.io
-                  kind: ClusterRole
             applications:
               argocd-configs:
                 namespace: infra-argocd
