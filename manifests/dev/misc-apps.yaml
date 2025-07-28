@@ -54,7 +54,7 @@ spec:
             applications:
               argocd-configs:
                 namespace: infra-argocd
-                project: argocd-apps
+                project: infra-argocd
                 destination:
                   namespace: infra-argocd
                   server: https://kubernetes.default.svc
