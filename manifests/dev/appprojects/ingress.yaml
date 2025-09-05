@@ -17,4 +17,4 @@ spec:
     - group: ""
       kind: Ingress
   sourceRepos:
-    - http://my-gitea-instance-http.gitea-dev.svc.cluster.local:3000/dev-admin/kubernetes-lab-argocd-configs.git
+    - http://my-git-instance-pygitserver.git-server-dev.svc.cluster.local:8000/argocd-configs
