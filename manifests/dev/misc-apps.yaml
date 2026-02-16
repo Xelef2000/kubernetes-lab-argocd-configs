@@ -1,4 +1,3 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -52,6 +51,51 @@ spec:
                   server: https://kubernetes.default.svc
                 source:
                   path: manifests/dev/appprojects
+                  repoURL: http://my-git-instance-pygitserver.git-server-dev.svc.cluster.local:8000/argocd-configs
+                  targetRevision: HEAD
+                syncPolicy:
+                  automated: {}
+              namespaces:
+                namespace: infra-argocd
+                additionalLabels:
+                  app.kubernetes.io/component: infra
+                  app.kubernetes.io/name: helm-infrastructure-argoconfig
+                project: namespaces
+                destination:
+                  namespace: infra-argocd
+                  server: https://kubernetes.default.svc
+                source:
+                  path: manifests/dev/namespaces/
+                  repoURL: http://my-git-instance-pygitserver.git-server-dev.svc.cluster.local:8000/argocd-configs
+                  targetRevision: HEAD
+                syncPolicy:
+                  automated: {}
+              services:
+                namespace: infra-argocd
+                additionalLabels:
+                  app.kubernetes.io/component: infra
+                  app.kubernetes.io/name: helm-infrastructure-argoconfig
+                project: services
+                destination:
+                  namespace: infra-argocd
+                  server: https://kubernetes.default.svc
+                source:
+                  path: manifests/dev/services/
+                  repoURL: http://my-git-instance-pygitserver.git-server-dev.svc.cluster.local:8000/argocd-configs
+                  targetRevision: HEAD
+                syncPolicy:
+                  automated: {}
+              ingress:
+                namespace: infra-argocd
+                additionalLabels:
+                  app.kubernetes.io/component: infra
+                  app.kubernetes.io/name: helm-infrastructure-argoconfig
+                project: ingress
+                destination:
+                  namespace: infra-argocd
+                  server: https://kubernetes.default.svc
+                source:
+                  path: manifests/dev/ingress/
                   repoURL: http://my-git-instance-pygitserver.git-server-dev.svc.cluster.local:8000/argocd-configs
                   targetRevision: HEAD
                 syncPolicy:
